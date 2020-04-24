@@ -1,0 +1,56 @@
+{{/*
+  parse (desctiption to come)
+
+  @author @regisphilibert
+
+  @context Slice|Map
+
+  @use
+    - Self
+
+  @access private
+
+  @example - Go Template
+    {{ partial "path" context }}
+    {{ partialCached "path" context "variant" }}
+*/}}
+{{ $return := false }}
+{{/* We only modify the data if context is a Map or a Slice */}}
+{{ if or (reflect.IsSlice .) (reflect.IsMap .) }}
+  {{/* If context is slice */}}
+  {{ if reflect.IsSlice . }}
+    {{/* We init a new slice */}}
+    {{ $slice := slice }}
+    {{/* We range on its item */}}
+    {{ range . }}
+      {{/* As it is a slice, its entries might be "imports" */}}
+      {{ with partial "func/import" . }}
+        {{/* We recursively use self partial to deep parse the result */}}
+        {{ with partial "func/parse" . }}
+          {{/* We add the produced data as an entry to the newly processed slice */}}
+          {{ $slice = $slice | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{/* We'll return the $slice */}}
+    {{ $return = $slice }}
+  {{/* If context is a map */}}
+  {{ else if reflect.IsMap . }}
+    {{/* We init an empty map */}}
+    {{ $map := dict }}
+    {{/* We range on it via key and value */}}
+    {{ range $key, $value := . }}
+      {{/* As it's a not a slice, there is no potential imports, we can directly use parse */}}
+      {{ with partial "func/parse" . }}
+        {{/* We merge the produced data with the newly created $map */}}
+        {{ $map = merge $map (dict $key .) }}
+      {{ end }}
+    {{ end }}
+    {{/* We'll return the $map */}}
+    {{ $return = $map }}
+  {{ end }}
+{{ else }}
+  {{ $return = . }}
+{{ end }}
+
+{{ return $return }}

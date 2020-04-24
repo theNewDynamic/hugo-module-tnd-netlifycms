@@ -1,0 +1,3 @@
+{{- with partial "func/process" . -}}
+  {{ . }}
+{{- end -}}

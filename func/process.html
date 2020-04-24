@@ -1,0 +1,14 @@
+{{ $config := dict }}
+{{ with partial "func/GetBase" . }}
+  {{ $config = . }}
+{{ end }}
+
+{{ with $config.collections }}
+  {{ with partial "func/parse" . }}
+    {{ $config = merge $config (dict "collections" .) }}
+  {{ end }}
+{{ end }}
+
+{{ $return := transform.Remarshal "yaml" $config }}
+
+{{ return $return }}

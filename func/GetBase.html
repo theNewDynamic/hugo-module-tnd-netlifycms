@@ -1,0 +1,6 @@
+{{ $return := "" }}
+{{ with site.Data.netlifycms.config }}
+  {{ $return = . }}
+{{ end }}
+
+{{ return $return }}

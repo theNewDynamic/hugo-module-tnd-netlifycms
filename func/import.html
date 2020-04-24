@@ -1,0 +1,31 @@
+{{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/]*)$" }}
+
+{{ $return := . }}
+{{ $type := false }}
+{{ $file := false }}
+{{ if not (reflect.IsMap .) }}
+  {{ if not (reflect.IsSlice .) }}
+    {{ $input := . }}
+    {{ $return = dict }}
+    {{ with findRE $pattern $input }}
+      {{ $return = . }}
+      {{ with replaceRE $pattern "$1" $input }}
+        {{ $type = . }}
+      {{ end }}
+      {{ with replaceRE $pattern "$2" $input }}
+        {{ $file = . }}
+      {{ end }}
+
+      {{ if and $type $file }}
+      {{ warnf "%#v" $type }}
+        {{ with index site.Data.netlifycms (pluralize $type) }}
+          {{ with index . $file }}
+            {{ $return = . }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ return $return }}

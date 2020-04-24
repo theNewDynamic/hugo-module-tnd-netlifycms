@@ -1,0 +1,1117 @@
+backend:
+  name: git-gateway
+  branch: 58b-testing-netlify-cms # Branch to update (optional; defaults to master)
+publish_mode: editorial_workflow
+show_preview_links: true
+local_backend: true
+use_graphql: true
+media_folder: static/uploads
+public_folder: /uploads
+site_url: "https://deploy-preview-62--aaldef.netlify.com"
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home-page"
+        label: "Home Page"
+        file: "content/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - label: "Page Sections"
+            name: "page_sections"
+            widget: "list"
+            types:
+              - label: "Events Section"
+                name: "events-section"
+                widget: "object"
+                fields:
+                  - {
+                      label: "Type",
+                      name: "type",
+                      widget: "hidden",
+                      default: "events-section",
+                    }
+                  - {
+                      label: "Template",
+                      name: template,
+                      widget: "hidden",
+                      default: "partial-block-events",
+                    }
+                  - {
+                      label: "Block",
+                      name: "block",
+                      widget: "hidden",
+                      default: "events",
+                    }
+                  - {
+                      label: "Number of Past Events",
+                      name: "number_of_past_events",
+                      widget: "number",
+                    }
+                  - {
+                      label: "Events Label",
+                      name: "events_label",
+                      widget: "string",
+                    }
+                  - {
+                      label: "Past Events Label",
+                      name: "past_events_label",
+                      widget: "string",
+                    }
+              - label: "Updates Section"
+                name: "updates-section"
+                widget: "object"
+                fields:
+                  - {
+                      label: "Type",
+                      name: "type",
+                      widget: "hidden",
+                      default: "updates-section",
+                    }
+                  - {
+                      label: "Template",
+                      name: template,
+                      widget: "hidden",
+                      default: "partial-block-updates",
+                    }
+                  - {
+                      label: "Block",
+                      name: "block",
+                      widget: "hidden",
+                      default: "updates",
+                    }
+                  - label: "Sections"
+                    name: "sections"
+                    widget: "list"
+                    types:
+                      - label: "Section"
+                        name: "sub-section"
+                        widget: "object"
+                        fields:
+                          - {
+                              label: "Type",
+                              name: "type",
+                              widget: "hidden",
+                              default: "sub-section",
+                            }
+                          - {
+                              label: "Section Label",
+                              name: "section_label",
+                              widget: "string",
+                            }
+                          - {
+                              label: "Section",
+                              name: "section",
+                              widget: "select",
+                              options: ["news", "press-release", "blog"],
+                            }
+                          - {
+                              label: "Number of Posts",
+                              name: "number_of_posts",
+                              widget: "number",
+                            }
+              - label: "Past Events Section"
+                name: "past-events-section"
+                widget: "object"
+                fields:
+                  - {
+                      label: "Type",
+                      name: "type",
+                      widget: "hidden",
+                      default: "past-events-section",
+                    }
+                  - {
+                      label: "Template",
+                      name: template,
+                      widget: "hidden",
+                      default: "partial-block-events-past",
+                    }
+                  - {
+                      label: "Block",
+                      name: "block",
+                      widget: "hidden",
+                      default: "events-past",
+                    }
+                  - {
+                      label: "Number of Past Events",
+                      name: "number_of_past_events",
+                      widget: "number",
+                    }
+                  - {
+                      label: "Past Events Label",
+                      name: "past_events_label",
+                      widget: "string",
+                    }
+
+      - name: "contact-page"
+        label: "Contact Page"
+        file: "content/contact-us.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - label: "Images"
+            name: "images"
+            widget: "list"
+            fields:
+              - label: "Image"
+                name: "image"
+                widget: "image"
+              - label: "Credit"
+                name: "credit"
+                widget: "string"
+              - label: "Caption"
+                name: "caption"
+                widget: "string"
+          - {
+              label: "Authors",
+              name: "authors",
+              widget: "list",
+              field:
+                {
+                  label: "Author",
+                  widget: "relation",
+                  collection: "authors",
+                  searchFields: "title",
+                  valueField: "title",
+                },
+            }
+          - {
+              label: "Related Programs",
+              name: "related_programs",
+              widget: "list",
+              field:
+                {
+                  label: "Program",
+                  widget: "relation",
+                  collection: "programs",
+                  searchFields: "title",
+                  valueField: "title",
+                },
+            }
+          - {
+              label: "Link to Original",
+              name: "link_to_original",
+              widget: "string",
+              required: false,
+            }
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - {
+                  label: "Image",
+                  name: "image",
+                  widget: "image",
+                  required: false,
+                }
+              - {
+                  label: "Description",
+                  name: "description",
+                  widget: "markdown",
+                  required: false,
+                }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "search-page"
+        label: "Search Page"
+        file: "content/search.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+      - name: "thank-you-page"
+        label: "Thank You Page"
+        file: "content/thank-you.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "unity-map"
+        label: "Unity Map"
+        file: "content/unity-map.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "about-page"
+        label: "About Page"
+        file: "content/about/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Link Title", name: "linkTitle", widget: "string" }
+          - {
+              label: "Aliases",
+              name: "aliases",
+              widget: "list",
+              field: { label: "Alias", widget: "string" },
+            }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "text",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "board-of-directors"
+        label: "Board of Directors"
+        file: "content/about/board-of-directors.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "text",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - label: "Board"
+            name: "board"
+            widget: "list"
+            fields:
+              - label: "Name"
+                name: "name"
+                widget: "string"
+              - label: "Affiliation"
+                name: "affiliation"
+                widget: "string"
+      - name: "our-history"
+        label: "Our History"
+        file: "content/about/history.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "text",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "jobs-page"
+        label: "Jobs Page"
+        file: "content/about/jobs.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "date" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "text",
+              required: false,
+            }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "events-page"
+        label: "Events Page"
+        file: "content/events/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+      - name: "blogs-page"
+        label: "Blogs Page"
+        file: "content/blog/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+      - name: "litigation-docket-page"
+        label: "Litigation Docket Page"
+        file: "content/litigation-docket/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "text",
+              required: false,
+            }
+      - name: "news-page"
+        label: "News Page"
+        file: "content/news/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+      - name: "press-releases-page"
+        label: "Press Releases Page"
+        file: "content/press-release/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+      - name: "programs-page"
+        label: "Programs Page"
+        file: "content/programs/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - {
+              label: "Featured",
+              name: "Featured",
+              widget: "boolean",
+              default: false,
+            }
+      - name: "publications-page"
+        label: "Publications Page"
+        file: "content/publications/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+      - name: "staff-page"
+        label: "Staff Page"
+        file: "content/staff/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+      - name: "take-action-page"
+        label: "Take Action Page"
+        file: "content/take-action/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - { label: "Date", name: "date", widget: "date" }
+      - name: "donate-page"
+        label: "Donate Page"
+        file: "content/take-action/donate.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - {
+              label: "Aliases",
+              name: "aliases",
+              widget: "list",
+              field: { label: "Alias", widget: "string" },
+            }
+          - label: Topic
+            name: topic
+            widget: list
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Copy", name: "copy", widget: "markdown" }
+          - { label: "Copy", name: "copy", widget: "markdown", required: false }
+          - {
+              label: "Italicize",
+              name: "italicize",
+              widget: "boolean",
+              default: "false",
+            }
+          - label: "Page Bottom Copy"
+            name: "page_bottom_copy"
+            widget: "object"
+            fields:
+              - {
+                  label: "Copy",
+                  name: "copy",
+                  widget: "markdown",
+                  required: false,
+                }
+              - {
+                  label: "Italicize",
+                  name: "italicize",
+                  widget: "boolean",
+                  default: false,
+                }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "follow-us-page"
+        label: "Follow Us Page"
+        file: "content/take-action/follow-us.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+          - { label: "Date", name: "date", widget: "date", required: false }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - name: "volunteer-page"
+        label: "Volunteer Page"
+        file: "content/take-action/volunteer.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Images",
+              name: "images",
+              widget: "list",
+              field: { label: "Image", name: "image", widget: "image" },
+            }
+          - { label: "Date", name: "date", widget: "date", required: false }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "markdown",
+              required: false,
+            }
+      - name: "translated-content"
+        label: "Translated Content"
+        file: "content/translation/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - {
+              label: "Exclude From Collection",
+              name: "exclude_collection",
+              widget: "boolean",
+              default: true,
+            }
+          - { label: "Draft", name: "draft", widget: "boolean", default: true }
+      - name: "updates-page"
+        label: "Updates Page"
+        file: "content/updates/_index.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+
+  - name: "blog-posts"
+    label: "Blog Posts"
+    folder: "content/blog"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Contributors",
+          name: "contributors",
+          widget: "list",
+          field:
+            {
+              label: "Contributor",
+              widget: "relation",
+              collection: "contributors",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "string",
+          required: false,
+        }
+      - { name: "type", widget: "hidden", default: "updates", required: false }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          field:
+            {
+              label: "Tag",
+              widget: "string",
+            },
+        }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        fields:
+          - label: "Image"
+            name: "image"
+            widget: "image"
+            required: false
+          - label: "Description"
+            name: "description"
+            widget: "text"
+            required: false
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "events"
+    label: "Events"
+    folder: "content/events"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "markdown",
+          required: false,
+        }
+      - { label: "Date", name: "date", widget: "date" }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - {
+          label: "Show Time",
+          name: "show_time",
+          widget: "boolean",
+          default: true,
+        }
+      - label: "Venue"
+        name: "venue"
+        widget: "object"
+        fields:
+          - label: "Name"
+            name: "name"
+            widget: "string"
+            required: false
+          - label: "Street 1"
+            name: "street1"
+            widget: "string"
+            required: false
+          - label: "Street 2"
+            name: "street2"
+            widget: "string"
+            required: false
+          - label: "City"
+            name: "city"
+            widget: "string"
+            required: false
+          - label: "State"
+            name: "state"
+            widget: "string"
+            required: false
+          - label: "Zip Code"
+            name: "zip"
+            widget: "string"
+            required: false
+          - label: "Country"
+            name: "country"
+            widget: "string"
+            required: false
+      - {
+          label: "Authors",
+          name: "authors",
+          widget: "list",
+          field:
+            {
+              label: "Author",
+              widget: "relation",
+              collection: "authors",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - { label: "Link to Original", name: "link_to_original", required: false }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        fields:
+          - label: "Image"
+            name: "image"
+            widget: "image"
+            required: false
+          - label: "Description"
+            name: "description"
+            widget: "text"
+            required: false
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "litigation-dockets"
+    label: "Litigation Dockets"
+    folder: "content/litigation-docket"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "markdown",
+          required: false,
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "news-posts"
+    label: "News Posts"
+    folder: "content/news"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{slug}}"
+    preview_path: news/{{slug}}
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Authors",
+          name: "authors",
+          widget: "list",
+          field:
+            {
+              label: "Author",
+              widget: "relation",
+              collection: "authors",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - { name: "type", widget: "hidden", default: "updates", required: false }
+      - { label: "Date", name: "date", widget: "date" }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - {
+          label: "Link to Original",
+          name: "link_to_original",
+          widget: "string",
+          required: false,
+        }
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        fields:
+          - label: "Image"
+            name: "image"
+            widget: "image"
+          - label: "Credit"
+            name: "credit"
+            widget: "string"
+          - label: "Caption"
+            name: "caption"
+            widget: "string"
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          field:
+            {
+              label: "Tag",
+              widget: "string",
+            },
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "press-releases"
+    label: "Press Releases"
+    folder: "content/press-release"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Authors",
+          name: "authors",
+          widget: "list",
+          field:
+            {
+              label: "Author",
+              widget: "relation",
+              collection: "authors",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - {
+          label: "Type",
+          name: "type",
+          widget: "select",
+          options: ["updates"],
+          required: false,
+        }
+      - { label: "Date", name: "date", widget: "date" }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - {
+          label: "Link to Original",
+          name: "link_to_original",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          field:
+            {
+              label: "Tag",
+              widget: "string",
+            },
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "programs"
+    label: "Programs"
+    folder: "content/programs"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "date" }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "markdown",
+          required: false,
+        }
+      - {
+          label: "Featured",
+          name: "Featured",
+          widget: "boolean",
+          default: false,
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "publications"
+    label: "Publications"
+    folder: "content/publications"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "date" }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "markdown",
+          required: false,
+        }
+      - label: "Files"
+        name: "files"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "File", name: "file", widget: "file" }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+  - name: "contributors"
+    label: "Contributors"
+    folder: "content/contributor"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Last Name", name: "name_last", widget: "string" }
+      - { label: "First Name", name: "name_first", widget: "string" }
+      - { label: "Position", name: "position", widget: "string" }
+      - {
+          label: "Internal",
+          name: "internal",
+          widget: "boolean",
+          default: true,
+        }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - { label: "Group", name: "group", widget: "string", required: false }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "markdown",
+          required: false,
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "authors"
+    label: "Staff Pages"
+    folder: "content/staff"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Last Name", name: "name_last", widget: "string" }
+      - { label: "First Name", name: "name_first", widget: "string" }
+      - { label: "Position", name: "position", widget: "string" }
+      - {
+          label: "Internal",
+          name: "internal",
+          widget: "boolean",
+          default: true,
+        }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - { label: "Date", name: "date", widget: "date" }
+      - {
+          label: "Group",
+          name: "group",
+          widget: "select",
+          options:
+            ["Program Staff", "Development and Administration", "Executive"],
+        }
+      - { label: "Weight", name: "weight", widget: "number", required: false }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "markdown",
+          required: false,
+        }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "translations"
+    label: "Translations"
+    folder: "content/translation"
+    filter: { field: "exclude_collection" }
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Type", name: "type", widget: "hidden", defaulut: "about" }
+      - { label: "Date", name: "date", widget: "date", required: false }
+      - { label: "Description", name: "description", widget: "string" }
+      - {
+          label: "Related Programs",
+          name: "related_programs",
+          widget: "list",
+          field:
+            {
+              label: "Program",
+              widget: "relation",
+              collection: "programs",
+              searchFields: "title",
+              valueField: "title",
+            },
+        }
+      - label: "Files"
+        name: "files"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "File", name: "file", widget: "file" }
+      - {
+          label: "Images",
+          name: "images",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - {
+          label: "Language Code",
+          name: "language_code",
+          widget: "string",
+          required: false,
+        }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
