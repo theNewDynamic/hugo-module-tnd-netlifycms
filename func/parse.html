@@ -14,7 +14,7 @@
     {{ partial "path" context }}
     {{ partialCached "path" context "variant" }}
 */}}
-{{ $return := false }}
+{{ $return := . }}
 {{/* We only modify the data if context is a Map or a Slice */}}
 {{ if or (reflect.IsSlice .) (reflect.IsMap .) }}
   {{/* If context is slice */}}
@@ -37,17 +37,24 @@
   {{/* If context is a map */}}
   {{ else if reflect.IsMap . }}
     {{/* We init an empty map */}}
-    {{ $map := dict }}
+    {{ $map := . }}
+    {{ $origin := . }}
     {{/* We range on it via key and value */}}
     {{ range $key, $value := . }}
-      {{/* As it's a not a slice, there is no potential imports, we can directly use parse */}}
-      {{ with partial "func/parse" . }}
-        {{/* We merge the produced data with the newly created $map */}}
-        {{ $map = merge $map (dict $key .) }}
-      {{ end }}
+        {{/* As it's a not a slice, there is no potential imports, we can directly use parse */}}
+        {{ with partial "func/parse" . }}
+          {{/* We merge the produced data with the newly created $map */}}
+          {{ if ne . $value }}
+            {{ $map = merge $map (dict $key .) }}
+          {{ end }}
+        {{ end }}
     {{ end }}
     {{/* We'll return the $map */}}
-    {{ $return = $map }}
+    {{ if ne $origin $map }}
+      {{ $return = $map }}
+    {{ else }}
+      {{ $return = $origin }}
+    {{ end }}
   {{ end }}
 {{ else }}
   {{ $return = . }}

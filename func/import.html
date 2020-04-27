@@ -1,4 +1,4 @@
-{{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/]*)$" }}
+{{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/_-]*)$" }}
 
 {{ $return := . }}
 {{ $type := false }}
@@ -15,13 +15,15 @@
       {{ with replaceRE $pattern "$2" $input }}
         {{ $file = . }}
       {{ end }}
-
       {{ if and $type $file }}
-      {{ warnf "%#v" $type }}
         {{ with index site.Data.netlifycms (pluralize $type) }}
           {{ with index . $file }}
             {{ $return = . }}
+          {{ else }}
+            {{ warnf "We couldn't find %s/%s" $type $file }}
           {{ end }}
+        {{ else }}
+          {{ warnf "We couldn't find Type %s" $type }}
         {{ end }}
       {{ end }}
     {{ end }}
