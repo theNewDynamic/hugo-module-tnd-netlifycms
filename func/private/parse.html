@@ -24,9 +24,9 @@
     {{/* We range on its item */}}
     {{ range . }}
       {{/* As it is a slice, its entries might be "imports" */}}
-      {{ with partial "func/import" . }}
+      {{ with partial "tnd-netlifycms/private/import" . }}
         {{/* We recursively use self partial to deep parse the result */}}
-        {{ with partial "func/parse" . }}
+        {{ with partial "tnd-netlifycms/private/parse" . }}
           {{/* We add the produced data as an entry to the newly processed slice */}}
           {{ $slice = $slice | append . }}
         {{ end }}
@@ -42,7 +42,7 @@
     {{/* We range on it via key and value */}}
     {{ range $key, $value := . }}
         {{/* As it's a not a slice, there is no potential imports, we can directly use parse */}}
-        {{ with partial "func/parse" . }}
+        {{ with partialCached "tnd-netlifycms/private/parse" . . }}
           {{/* We merge the produced data with the newly created $map */}}
           {{ if ne . $value }}
             {{ $map = merge $map (dict $key .) }}

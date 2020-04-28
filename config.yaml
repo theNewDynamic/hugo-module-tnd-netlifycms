@@ -2,23 +2,21 @@ module:
   mounts:
     - source: templates
       target: layouts/_default
+    - source: templates
+      target: layouts/page
     - source: func
-      target: layouts/partials/func
+      target: layouts/partials/tnd-netlifycms
 outputFormats:
-  netlifycms_dash:
-    baseName: tnd-cms/jan
-    mediatype: text/html
-    notAlternative: true
-  netlifycms_config_debug:
+  netlifycms_debug:
     baseName: config
     isPlainText: true
     mediatype: text/plain
-    notAlternative: true
+    notAlternative: false
   netlifycms_config:
-    baseName: tnd-cms/config
+    baseName: config
     isPlainText: true
     mediatype: application/yaml
-    notAlternative: true
+    notAlternative: false
 mediaTypes:
   application/yaml:
     suffixes:

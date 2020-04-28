@@ -1,10 +1,10 @@
 {{ $config := dict }}
-{{ with partial "func/GetBase" . }}
+{{ with partial "tnd-netlifycms/private/GetConfig" . }}
   {{ $config = . }}
 {{ end }}
 
 {{ with $config.collections }}
-  {{ with partial "func/parse" . }}
+  {{ with partial "tnd-netlifycms/private/parse" . }}
     {{ $config = merge $config (dict "collections" .) }}
   {{ end }}
 {{ end }}
