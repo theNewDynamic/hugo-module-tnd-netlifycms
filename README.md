@@ -2,7 +2,7 @@
 
 This module, in its phase 1, tends to simplify the construct of Netlify CMS lone config file and set up the Netlify CMS page wherever on the project.
 
-By using Hugo's Data file system to store and maintain reusable data objects which can be imported as collections or fields, the module ease up on maintaining this wall of glyph that can quickly become your Netlify CMS' `config.yml`
+By using Hugo's Data files system to store and maintain reusable data objects which can be imported in the Netlify CMS configuration file as collections or fields, the module ease up on maintaining this wall of glyph that can quickly become your favorite CMS' `config.yml`
 
 ## The Import statement
 ``` 
@@ -12,9 +12,8 @@ import collection posts
 ## Adding to your project
 
 1. Create a page where your Netlify CMS dasboard should live.
-2. Add the `netlifycms` layout.
-2. Add the `netlifycms_config` output format to the page (alongside HTML):
-
+2. Add the `netlifycms` layout to it through Front Mtter.
+3. Add the `netlifycms_config` output format to it through Front Matter (alongside HTML):
 ```yaml
 Title: Your CMS
 layout: netlifycms
@@ -22,12 +21,13 @@ outputs:
   - HTML
   - netlifycms_config
 ```
-
-Populate you `data/netlifycms` directory.
+4. Add your Netlify config data in `data/netlifycms/config.yaml` and use (or not) `import` statements.
+5. Add the data files matching your imports statements to the `data/netlifycms` dir under `/collections` and `/fields`
 
 ##  Example of the base config data file
 
 ```yaml
+# data/netlifycms/config.yaml
 backend:
   name: git-gateway
   branch: easier-netlify-cms
@@ -45,6 +45,7 @@ collections:
 ## Example of a Collection data file
 
 ```yaml
+# data/netlifycms/collections/posts.yaml
 name: "posts"
 label: "Posts"
 folder: "content/posts"
@@ -72,6 +73,7 @@ fields:
 ## Example of a Field data file
 
 ```yaml
+# data/netlifycms/fields/title.yaml
 label: "Title"
 name: "title"
 widget: "string"

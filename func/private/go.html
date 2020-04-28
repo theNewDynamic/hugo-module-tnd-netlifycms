@@ -13,7 +13,7 @@
       {{- end -}}
 */}}
 {{ $config := dict }}
-{{ with partial "tnd-netlifycms/private/GetConfig" . }}
+{{ with partialCached "tnd-netlifycms/private/GetConfig" . "tnd-netlifycms/private/GetConfig" }}
   {{ $config = . }}
 {{ end }}
 

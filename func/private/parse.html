@@ -29,9 +29,9 @@
     {{/* We range on its item */}}
     {{ range . }}
       {{/* As it is a slice, its entries might be "imports" */}}
-      {{ with partial "tnd-netlifycms/private/import" . }}
+      {{ with partialCached "tnd-netlifycms/private/import" . . }}
         {{/* We recursively use self partial to deep parse the result */}}
-        {{ with partial "tnd-netlifycms/private/parse" . }}
+        {{ with partialCached "tnd-netlifycms/private/parse" . . }}
           {{/* We add the produced data as an entry to the newly processed slice */}}
           {{ $slice = $slice | append . }}
         {{ end }}

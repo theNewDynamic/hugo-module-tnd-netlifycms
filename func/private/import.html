@@ -15,6 +15,7 @@
     {{ partial "path" context }}
     {{ partialCached "path" context "variant" }}
 */}}
+{{/* regex101.com > https://regex101.com/r/TFA6WQ/1 */}}
 {{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/_-]*)$" }}
 
 {{/* Return variable, by default, will be the passed context */}}
