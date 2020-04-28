@@ -5,10 +5,10 @@ This module, in its phase 1, tends to simplify the construct of Netlify CMS lone
 By using Hugo's Data file system to store and maintain reusable data objects which can be imported as collections or fields, the module ease up on maintaining this wall of glyph that can quickly become your Netlify CMS' `config.yml`
 
 ## The Import statement
-
-`import collection posts`
-        |  type  | | file name
-
+``` 
+import collection posts
+       |  type  | | file name
+```
 ## Adding to your project
 
 1. Create a page where your Netlify CMS dasboard should live.
