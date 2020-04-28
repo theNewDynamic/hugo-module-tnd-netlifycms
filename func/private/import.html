@@ -1,21 +1,46 @@
+{{/*
+  import
+  Reads a data object, look for an import statement and returns the correspondig data if present in data files. If not import found
+  returns the context data as is.
+
+  @author @regisphilibert
+
+  @context Any (.)
+
+  @return Any (.)
+
+  @access public
+
+  @example - Go Template
+    {{ partial "path" context }}
+    {{ partialCached "path" context "variant" }}
+*/}}
 {{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/_-]*)$" }}
 
+{{/* Return variable, by default, will be the passed context */}}
 {{ $return := . }}
 {{ $type := false }}
 {{ $file := false }}
+{{/* We're looking for a string, so we start by eliminating Slices and Maps */}}
 {{ if not (reflect.IsMap .) }}
   {{ if not (reflect.IsSlice .) }}
+    {{/* We have a string and store it as $input */}}
     {{ $input := . }}
+    {{/* In case that string won't bring anything we emtpty $return so it fails a `with` test. */}}
     {{ $return = dict }}
+    {{/* We're looking for a properly formated import statement */}}
     {{ with findRE $pattern $input }}
-      {{ $return = . }}
+      {{/* We isolate the Type from the statement */}}
       {{ with replaceRE $pattern "$1" $input }}
         {{ $type = . }}
       {{ end }}
+      {{/* We isolate the File from the statement */}}
       {{ with replaceRE $pattern "$2" $input }}
         {{ $file = . }}
       {{ end }}
+      {{/* With both File and Type... */}}
       {{ if and $type $file }}
+        {{/* We look for the matching data file located in `data/netlifycms/{Type}/{File}.yaml` */}}
         {{ with index site.Data.netlifycms (pluralize $type) }}
           {{ with index . $file }}
             {{ $return = . }}

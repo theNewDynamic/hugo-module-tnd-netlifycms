@@ -1,3 +1,17 @@
+{{/*
+  Go simply run the process and returns data for templates.
+
+  @author @regisphilibert
+
+  @context Type (.name)
+
+  @access private
+
+  @example - Go Template
+      {{- with partial "tnd-netlifycms/private/go" . -}}
+        {{ . }}
+      {{- end -}}
+*/}}
 {{ $config := dict }}
 {{ with partial "tnd-netlifycms/private/GetConfig" . }}
   {{ $config = . }}

@@ -1,18 +1,23 @@
 {{/*
-  parse (desctiption to come)
+  parse 
+  Take some data, range through it and apply the importing logic when available.
 
   @author @regisphilibert
 
-  @context Slice|Map
+  @context Slice/Map
+
+  @return Slice/Map
 
   @use
     - Self
+    - private/import
 
   @access private
 
   @example - Go Template
-    {{ partial "path" context }}
-    {{ partialCached "path" context "variant" }}
+    {{ with partial "tnd-netlifycms/private/parse" . }}
+      {{ $do := . }}
+    {{ end }}
 */}}
 {{ $return := . }}
 {{/* We only modify the data if context is a Map or a Slice */}}
