@@ -12,7 +12,7 @@ import collection posts
 ## Adding to your project
 
 1. Create a page where your Netlify CMS dasboard should live.
-2. Add the `netlifycms` layout to it through Front Mtter.
+2. Add the `netlifycms` layout to it through Front Matter.
 3. Add the `netlifycms_config` output format to it through Front Matter (alongside HTML):
 ```yaml
 Title: Your CMS
