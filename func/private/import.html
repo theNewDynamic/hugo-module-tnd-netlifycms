@@ -1,7 +1,7 @@
 {{/*
   import
-  Reads a data object, look for an import statement and returns the correspondig data if present in data files. If not import found
-  returns the context data as is.
+  Reads a data object, look for an import statement and returns the correspondig data if present in data files. 
+  If no import found returns the context data as is.
 
   @author @regisphilibert
 
@@ -9,11 +9,11 @@
 
   @return Any (.)
 
-  @access public
+  @access private
 
   @example - Go Template
-    {{ partial "path" context }}
-    {{ partialCached "path" context "variant" }}
+    {{ with partialCached "tnd-netlifycms/private/import" . . }}
+    {{ end }}
 */}}
 {{/* regex101.com > https://regex101.com/r/TFA6WQ/1 */}}
 {{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/_-]*)$" }}
