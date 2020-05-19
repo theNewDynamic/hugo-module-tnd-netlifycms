@@ -85,3 +85,37 @@ label: "Title"
 name: "title"
 widget: "string"
 ```
+
+## Scripts
+
+The module faciliate the addiont of extra Netlify CMS scripts for WidgetPreviews, CollectionPreviews etc...
+
+By default the module prints the content of any `assets/netlifycms.js` file found inside a `<script>` tag.
+
+For more control, user should create its own `layouts/partials/tnd-netlifycms/scripts.html` partial and load the project's custom scripts there.
+
+### Custom Scripts Partial example: 
+
+In this example, we use the load the project's stylesheet for the Articles previews and fire the Custom Preview afterwards, using the project's own classes.
+
+```
+{{ $style := false }}
+{{ with resources.Get "css/style.css" }}
+  {{ $style = . | resources.PostCSS }} 
+{{ end }}
+<script>
+  {{ with $style }}
+  CMS.registerPreviewStyle("{{ $style.Permalink }}");
+  {{ end }}
+  var PostPreview = createClass({
+    render: function() {
+      var entry = this.props.entry;
+      return h('div', {"className": "px-4"},
+        h('h1', {"className": "text-5xl font-normal pt-10 mb-16"}, entry.getIn(['data', 'title'])),
+        h('div', {"className": "my-4 user-content"}, this.props.widgetFor('body'))
+      );
+    }
+  });
+  CMS.registerPreviewTemplate("articles", PostPreview);
+</script>
+```
