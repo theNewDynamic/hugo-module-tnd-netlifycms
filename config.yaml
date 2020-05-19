@@ -6,6 +6,8 @@ module:
       target: layouts/page
     - source: func
       target: layouts/partials/tnd-netlifycms
+    - source: partials
+      target: layouts/partials/tnd-netlifycms
 outputFormats:
   netlifycms_debug:
     baseName: config

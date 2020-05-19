@@ -1,0 +1,3 @@
+{{ with resources.Get "netlifycms.js" }}
+<script>{{ .Content | safeJS }}</script>
+{{ end }}
