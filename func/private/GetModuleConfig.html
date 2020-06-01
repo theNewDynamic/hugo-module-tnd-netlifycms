@@ -1,0 +1,24 @@
+{{/*
+  GetModuleConfig returns the config as set in data/netlifycms/config.yaml's tnd_netlifycms map.
+
+  @author @regisphilibert
+
+  @context Any
+
+  @return Map
+
+  @access private
+
+  @example - Go Template
+    {{ with partial "tnd-netlifycms/private/GetModuleConfig" . }}
+      {{ $config = . }}
+    {{ end }}
+*/}}
+{{ $return := dict }}
+{{ with site.Data.netlifycms.config }}
+  {{ with .tnd_netlifycms }}
+    {{ $return = . }}
+  {{ end }}
+{{ end }}
+
+{{ return $return }}
