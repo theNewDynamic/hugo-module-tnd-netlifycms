@@ -1,9 +1,7 @@
 module:
   mounts:
     - source: templates
-      target: layouts/_default
-    - source: templates
-      target: layouts/page
+      target: layouts/netlifycms
     - source: func
       target: layouts/partials/tnd-netlifycms
     - source: partials
