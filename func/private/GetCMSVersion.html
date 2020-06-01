@@ -1,0 +1,27 @@
+{{/*
+  GetCMSVersion retrieves the version as set in the tnd_netlifycms settings.
+
+  @author @regisphilibert
+
+  @context Any (.)
+
+  @access public
+
+  @return String (default: ^2.0.0)
+
+  @example - Go Template
+    {{ partial "path" context }}
+    {{ partialCached "path" context "variant" }}
+*/}}
+
+{{/* Default is `^2.0.0` for now */}}
+{{ $version := `^2.0.0` }}
+
+{{ with partialCached "tnd-netlifycms/private/GetModuleConfig" . "tnd-netlifycms/private/GetModuleConfig" }}
+  {{ with .cms_version }}
+    {{ $version = . }}
+  {{ end }}
+{{ end }}
+
+
+{{ return $version }}

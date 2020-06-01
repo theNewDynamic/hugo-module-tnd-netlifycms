@@ -9,7 +9,11 @@
   </head>
   <body>
     <!-- Include the script that builds the page and powers Netlify CMS -->
-    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    {{- $version := partialCached "tnd-netlifycms/private/GetCMSVersion" . "tnd-netlifycms/private//GetCMSVersion" -}}
+    {{/* Hugo keeps escaping the `^` character potentially used to specify CMS version (`^2.0.0`) in spite of
+      safeHTML, safeHTMLAttr and the like. Passing the whole tag through `printf` fixes it... */}}
+    {{- $cdn := printf `<script src="https://unpkg.com/netlify-cms@%s/dist/netlify-cms.js"></script>` $version -}}
+    {{ $cdn | safeHTML }}
     {{ partial "tnd-netlifycms/scripts.html" . }}
   </body>
 </html>

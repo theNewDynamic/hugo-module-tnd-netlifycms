@@ -86,6 +86,13 @@ name: "title"
 widget: "string"
 ```
 
+## Module Settings
+
+Module settings are set as part of the shared `data/netlifycms/config.yaml` file under the reserved `tnd_netlifycms` map key.
+
+Available settings are:
+ - cms_version (default: `^2.0.0`): Semantic versioning string to be used when calling CDN endpoint.
+
 ## Scripts
 
 The module faciliate the addiont of extra Netlify CMS scripts for WidgetPreviews, CollectionPreviews etc...
