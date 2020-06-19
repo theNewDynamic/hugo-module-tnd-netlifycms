@@ -16,7 +16,7 @@ import collection posts
 ```
 module:
   imports:
-    - path: github.com/theNewDynamic/hugo-module-tndnetlify-cms
+    - path: github.com/theNewDynamic/hugo-module-tnd-netlifycms
 ```
 1. Create a page where your Netlify CMS dasboard should live.
 2. Add the `netlifycms` type to it through Front Matter.
