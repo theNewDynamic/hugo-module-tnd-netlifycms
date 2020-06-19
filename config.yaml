@@ -10,7 +10,7 @@ outputFormats:
   netlifycms_debug:
     baseName: config
     isPlainText: true
-    mediatype: text/plain
+    mediatype: text/html
     notAlternative: false
   netlifycms_config:
     baseName: config

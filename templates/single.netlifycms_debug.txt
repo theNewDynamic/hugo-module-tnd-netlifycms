@@ -1,3 +1,0 @@
-{{- with partialCached "tnd-netlifycms/private/go" . "tnd-netlifycms/private/go" -}}
-  {{ . }}
-{{- end -}}
