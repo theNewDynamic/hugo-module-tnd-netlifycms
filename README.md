@@ -1,4 +1,4 @@
-# TND Netlify CMS Hugo Module
+# TND NetlifyCMS Hugo Module
 
 This module try to simplify the construct of Netlify CMS lone config file. It also sets up the Netlify CMS page wherever on the project with minimal user intervention.
 
@@ -16,7 +16,7 @@ import collection posts
 ```
 module:
   imports:
-    - path: github.com/theNewDynamic/hugo-module-tnd-netlify-cms
+    - path: github.com/theNewDynamic/hugo-module-tndnetlify-cms
 ```
 1. Create a page where your Netlify CMS dasboard should live.
 2. Add the `netlifycms` type to it through Front Matter.
