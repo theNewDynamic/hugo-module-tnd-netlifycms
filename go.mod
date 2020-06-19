@@ -1,3 +1,3 @@
-module github.com/theNewDynamic/hugo-module-tnd-netlify-cms
+module github.com/theNewDynamic/hugo-module-tnd-netlifycms
 
 go 1.14
