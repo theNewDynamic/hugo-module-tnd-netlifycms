@@ -1,2 +1,36 @@
-resources
+# OS
 .DS_Store
+Thumbs.db
+
+# IDEs
+.buildpath
+.project
+.settings/
+.build/
+.idea/
+nbproject/
+public
+
+# Vagrant
+.vagrant/
+
+# FE Setup
+.bin/node_modules/
+/node_modules/
+/npm-debug.log.*
+/npm-debug.log
+/npm-debug.log*
+/dist/
+/src/client.config.json
+/docs/
+
+/junit.xml
+partials/structure/stylesheet.html
+
+# Hugo
+hugo_stats.json
+resources
+public
+
+# Local Netlify folder
+.netlify

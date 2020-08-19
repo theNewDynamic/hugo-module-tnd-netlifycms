@@ -2,9 +2,9 @@ module:
   mounts:
     - source: templates
       target: layouts/netlifycms
-    - source: func
-      target: layouts/partials/tnd-netlifycms
     - source: partials
+      target: layouts/partials/tnd-netlifycms
+    - source: console
       target: layouts/partials/tnd-netlifycms
 outputFormats:
   netlifycms_debug:

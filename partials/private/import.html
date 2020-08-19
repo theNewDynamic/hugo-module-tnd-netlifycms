@@ -46,10 +46,10 @@
           {{ with index . $file }}
             {{ $return = . }}
           {{ else }}
-            {{ warnf "We couldn't find %s/%s" $type $file }}
+            {{ partial "tnd-netlifycms/warn" (printf "We couldn't find %s/%s" $type $file) }}
           {{ end }}
         {{ else }}
-          {{ warnf "We couldn't find Type %s" $type }}
+          {{ partial "tnd-netlifycms/warn" (printf "We couldn't find Type %s" $type) }}
         {{ end }}
       {{ end }}
     {{ end }}

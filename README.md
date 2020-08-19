@@ -4,12 +4,37 @@ This module try to simplify the construct of Netlify CMS lone config file. It al
 
 In order to be able to reuse data objects inside the lone NetlifyCMS `config.yaml` file, this module makes use of Hugo's data file to store said data objects and allow them to be recursively imported in the configuration file.
 
-## The Import statement
+## Requirements
+
+Requirements:
+- Go 1.14
+- Hugo 0.61.0
+
+## Installation
+
+If not already, [init](https://gohugo.io/hugo-modules/use-modules/#initialize-a-new-module) your project as Hugo Module:
+
+```
+$: hugo mod init {repo_url}
+```
+
+Configure your project's module to import this module:
+
+```yaml
+# config.yaml
+module:
+  imports:
+  - path: github.com/theNewDynamic/hugo-module-tnd-netlifycms
+```
+
+## Usage
+
+### The Import statement
 ``` 
 import collection posts
        |  type  | | file name
 ```
-## Adding to your project
+### Adding to your project
 
 
 1. Add this module's path to your `module.imports` config array
@@ -31,7 +56,7 @@ outputs:
 4. Add your Netlify config data in `data/netlifycms/config.yaml` and use (or not) `import` statements.
 5. Add the data files matching your imports statements to the `data/netlifycms` dir under `/collections` and `/fields`
 
-##  Example of the base config data file
+###  Example of the base config data file
 
 ```yaml
 # data/netlifycms/config.yaml
@@ -49,7 +74,7 @@ collections:
 - import collection posts #--> data/netlifycms/collections/posts.yaml
 ```
 
-## Example of a Collection data file
+### Example of a Collection data file
 
 ```yaml
 # data/netlifycms/collections/posts.yaml
@@ -77,7 +102,7 @@ fields:
     }
 ```
 
-## Example of a Field data file
+### Example of a Field data file
 
 ```yaml
 # data/netlifycms/fields/title.yaml
@@ -86,7 +111,7 @@ name: "title"
 widget: "string"
 ```
 
-## Module Settings
+### Settings
 
 Module settings are set as part of the shared `data/netlifycms/config.yaml` file under the reserved `tnd_netlifycms` map key.
 
@@ -126,3 +151,7 @@ In this example, we use the load the project's stylesheet for the Articles previ
   CMS.registerPreviewTemplate("articles", PostPreview);
 </script>
 ```
+
+## theNewDynamic
+
+This project is maintained and loved by [thenewDynamic](https://www.thenewdynamic.com).
