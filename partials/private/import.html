@@ -16,41 +16,59 @@
     {{ end }}
 */}}
 {{/* regex101.com > https://regex101.com/r/TFA6WQ/1 */}}
-{{ $pattern := "^import ([a-zA-Z]*) ([a-zA-Z/_-]*)$" }}
-
+{{ $pattern := "^([a-zA-Z]*) ([a-zA-Z/_-]*)$"}}
+{{ $string_pattern := "^import ([a-zA-Z]*) ([a-zA-Z/_-]*)$" }}
 {{/* Return variable, by default, will be the passed context */}}
 {{ $return := . }}
 {{ $type := false }}
 {{ $file := false }}
-{{/* We're looking for a string, so we start by eliminating Slices and Maps */}}
-{{ if not (reflect.IsMap .) }}
-  {{ if not (reflect.IsSlice .) }}
+{{ $input := false }}
+{{ $extend := dict }}
+{{/* We're looking for a String or a Map, so we start by eliminating Slices */}}
+{{ if not (reflect.IsSlice .) }}
+  {{ if not (reflect.IsMap .) }}
     {{/* We have a string and store it as $input */}}
-    {{ $input := . }}
-    {{/* In case that string won't bring anything we emtpty $return so it fails a `with` test. */}}
+    {{ $input = . }}
+    {{/* We use the $string_pattern for subsequent findRE */}}
+    {{ $pattern = $string_pattern }}
+  {{ else }}
+    {{/* We have a map. We look for .import and store it as $input */}}
+    {{ with .import }}
+      {{ $input = . }}
+    {{ end }}
+    {{/* We also look for potential .extend data */}}
+    {{ with .extend }}
+      {{ $extend = . }}
+    {{ end }}
+  {{ end }}
+
+  {{/* We're looking for a properly formated import statement */}}
+  {{ with findRE $pattern $input }}
+    {{/* We do have an import statement, we reset $return as we're about to fill it with new data.
+    If the import statement fails to point to valid data file, we'll return an empty dict */}}
     {{ $return = dict }}
-    {{/* We're looking for a properly formated import statement */}}
-    {{ with findRE $pattern $input }}
-      {{/* We isolate the Type from the statement */}}
-      {{ with replaceRE $pattern "$1" $input }}
-        {{ $type = . }}
-      {{ end }}
-      {{/* We isolate the File from the statement */}}
-      {{ with replaceRE $pattern "$2" $input }}
-        {{ $file = . }}
-      {{ end }}
-      {{/* With both File and Type... */}}
-      {{ if and $type $file }}
-        {{/* We look for the matching data file located in `data/netlifycms/{Type}/{File}.yaml` */}}
-        {{ with index site.Data.netlifycms (pluralize $type) }}
-          {{ with index . $file }}
-            {{ $return = . }}
-          {{ else }}
-            {{ partial "tnd-netlifycms/warn" (printf "We couldn't find %s/%s" $type $file) }}
+    {{/* We isolate the Type from the statement */}}
+    {{ with replaceRE $pattern "$1" $input }}
+      {{ $type = . }}
+    {{ end }}
+    {{/* We isolate the File from the statement */}}
+    {{ with replaceRE $pattern "$2" $input }}
+      {{ $file = . }}
+    {{ end }}
+    {{/* With both File and Type... */}}
+    {{ if and $type $file }}
+      {{/* We look for the matching data file located in `data/netlifycms/{Type}/{File}.yaml` */}}
+      {{ with index site.Data.netlifycms (pluralize $type) }}
+        {{ with index . $file }}
+          {{ $return = . }}
+          {{ with $extend }}
+            {{ $return = merge $return . }}
           {{ end }}
         {{ else }}
-          {{ partial "tnd-netlifycms/warn" (printf "We couldn't find Type %s" $type) }}
+          {{ partial "tnd-netlifycms/warn" (printf "We couldn't find %s/%s" $type $file) }}
         {{ end }}
+      {{ else }}
+        {{ partial "tnd-netlifycms/warn" (printf "We couldn't find Type %s" $type) }}
       {{ end }}
     {{ end }}
   {{ end }}
