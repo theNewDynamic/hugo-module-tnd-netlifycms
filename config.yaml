@@ -1,5 +1,7 @@
 module:
   mounts:
+    - source: data
+      target: data
     - source: templates
       target: layouts/netlifycms
     - source: partials
