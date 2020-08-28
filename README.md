@@ -52,10 +52,26 @@ outputs:
 
 ### Import and Extend data sets
 
-NetlifyCMS uses yaml extensively. In order to avoid a lot of copy/paste the module allow to import a data set stored in `data/netlifycms/**/*.yaml`
+NetlifyCMS uses yaml extensively. In order to avoid a lot of copy/paste the module allow to import a data set stored in `data/netlifycms/**/*.yaml` as part of a yaml array.
 
-It's also possible to extend the data found in the file.
+It's also possible to extend/overwrite the data found in the file.
 
+#### Import
+
+From inside a `yaml` array, you can either use the string import statement, or the map import statement.
+
+`- import collection pages` or `- import: collection pages`
+
+#### Extend
+
+By using the map version of the import statement, you can add an extra `extend` key cointaining a map with values the add or overwrite:
+
+```yaml
+- import: collection pages
+  extend:
+    name: Pages FR
+    folder: content/fr
+```
 See example below of usage.
 
 ### Example of the base config data file
