@@ -46,11 +46,15 @@
     {{ $origin := . }}
     {{/* We range on it via key and value */}}
     {{ range $key, $value := . }}
-        {{/* As it's a not a slice, there is no potential imports, we can directly use parse */}}
-        {{ with partialCached "tnd-netlifycms/private/parse" . . }}
-          {{/* We merge the produced data with the newly created $map */}}
-          {{ if ne . $value }}
-            {{ $map = merge $map (dict $key .) }}
+        {{/* As it's a not a slice, there is no potential imports, we can directly use parse 
+          We make sure the value is not emtpy. As of Hugo .75 returning partial now requires a non-zero argument
+        */}}
+        {{ with . }}
+          {{ with partialCached "tnd-netlifycms/private/parse" . . }}
+            {{/* We merge the produced data with the newly created $map */}}
+            {{ if ne . $value }}
+              {{ $map = merge $map (dict $key .) }}
+            {{ end }}
           {{ end }}
         {{ end }}
     {{ end }}
