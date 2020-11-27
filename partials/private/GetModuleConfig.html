@@ -15,9 +15,11 @@
     {{ end }}
 */}}
 {{ $return := dict }}
-{{ with site.Data.netlifycms.config }}
-  {{ with .tnd_netlifycms }}
-    {{ $return = . }}
+{{ with site.Params.tnd_netlifycms }}
+  {{ $return = . }}
+{{ else }}
+  {{ with site.Data.netlifycms.config.tnd_netlifycms }}
+      {{ $return = . }}
   {{ end }}
 {{ end }}
 
