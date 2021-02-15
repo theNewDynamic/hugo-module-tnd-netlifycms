@@ -37,7 +37,7 @@ module:
   imports:
     - path: github.com/theNewDynamic/hugo-module-tnd-netlifycms
 ```
-1. Create a page where your Netlify CMS dasboard should live.
+1. Create a page where your Netlify CMS dashboard should live.
 2. Add the `netlifycms` type to it through Front Matter.
 3. Add the `netlifycms_config` output format to it through Front Matter (alongside HTML):
 ```yaml
@@ -64,7 +64,7 @@ From inside a `yaml` array, you can either use the string import statement, or t
 
 #### Extend
 
-By using the map version of the import statement, you can add an extra `extend` key cointaining a map with values the add or overwrite:
+By using the map version of the import statement, you can add an extra `extend` key containing a map with values the add or overwrite:
 
 ```yaml
 - import: collection pages
@@ -168,7 +168,7 @@ Available settings are:
 
 ## Scripts
 
-The module faciliate the addiont of extra Netlify CMS scripts for WidgetPreviews, CollectionPreviews etc...
+The module facilitates the addition of extra Netlify CMS scripts for WidgetPreviews, CollectionPreviews etc...
 
 By default the module prints the content of any `assets/netlifycms.js` file found inside a `<script>` tag.
 
