@@ -60,10 +60,18 @@
       {{/* We look for the matching data file located in `data/netlifycms/{Type}/{File}.yaml` */}}
       {{ with index site.Data.netlifycms (pluralize $type) }}
         {{ $with := index . $file }}
+        {{/* If we find a "." in the File string, it means user is trying to access a nested value.
+          We'll split the string and check for two nesting level max
+        */}}
         {{ $file_split := split $file "." }}
         {{ if eq (len $file_split) 2 }}
+          {{/* We have something like `import fields greeting.spanish */}}
           {{ $with = index . (index $file_split 0) (index $file_split 1) }}
+        {{ else if eq (len $file_split) 3 }}
+          {{/* We have something like `import fields greeting.spanish.singular */}}
+          {{ $with = index . (index $file_split 0) (index $file_split 1) (index $file_split 2) }}
         {{ end }}
+
         {{ with $with }}
           {{ $return = . }}
           {{ with $extend }}
@@ -71,7 +79,7 @@
           {{ end }}
         {{ else }}
           {{ $message := printf "We couldn't find %s/%s" $type $file }}
-          {{ with split $file "." }}
+          {{ with $file_split }}
             {{ if gt . 2 }}
               {{ $message = print $message " because object depth is limited to 2" }}
             {{ end }}
